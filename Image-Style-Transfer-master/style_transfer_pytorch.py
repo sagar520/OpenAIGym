@@ -106,12 +106,13 @@ loader = transforms.Compose([
 def image_loader(image_name):
     image = Image.open(image_name)
     # fake batch dimension required to fit network's input dimensions
+    image = image.resize((imsize, imsize))
     image = loader(image).unsqueeze(0)
     return image.to(device, torch.float)
 
 
-style_img = image_loader("Image-Style-Transfer-master/images/sf2.jpg")
-content_img = image_loader("Image-Style-Transfer-master/images/sf.jpg")
+style_img = image_loader("images/boston.jpg")
+content_img = image_loader("images/noise.jpg")
 
 assert style_img.size() == content_img.size(), \
     "we need to import style and content images of the same size"
@@ -413,7 +414,7 @@ def get_input_optimizer(input_img):
 
 def run_style_transfer(cnn, normalization_mean, normalization_std,
                        content_img, style_img, input_img, num_steps=300,
-                       style_weight=1000000, content_weight=1):
+                       style_weight=10000, content_weight=1):
     """Run the style transfer."""
     print('Building the style transfer model..')
     model, style_losses, content_losses = get_style_model_and_losses(cnn,
@@ -450,10 +451,10 @@ def run_style_transfer(cnn, normalization_mean, normalization_std,
                 print('Style Loss : {:4f} Content Loss: {:4f}'.format(
                     style_score.item(), content_score.item()))
                 print()
-
             return style_score + content_score
 
         optimizer.step(closure)
+        imshow(input_img, title='Output Image')
 
     # a last correction...
     input_img.data.clamp_(0, 1)
