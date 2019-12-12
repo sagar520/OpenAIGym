@@ -1,0 +1,44 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+
+\title{Project 4: Implementation, Investigation, and Extensions of Neural Style Transfer for Image Blending}
+
+\author{Sagar Agarwal\\Jimmy Kuo, jk4227\\ Siddhanth Sabharwal, ss5689}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+
+\noindent While Convolutional Neural Networks (CNNs) have been shown to be effective for the purposes of content recognition, they are much less proven for the objective of style representation. Here we implement A Neural Algorithm of Artistic Style and test its effectiveness on various content and style images. We have used pretrained networks and GPU acceleration for speed-up purposes. Our results demonstrate the algorithm's effectiveness on a broad range of settings and parameters. Lastly, we propose and explore an extension related to many-artist style transfer (MAST).
+
+\end{abstract}
+
+\section{Introduction}
+
+Object detection is a well-studied problem. One of the state-of-the art algorithms in the area is the pretrained image classification network, VGG. It is a nineteen layer neural network with convolution, pooling, and fully-connected layers proposed in 2014 in a paper titled Very Deep Convolutional Networks for Large-Scale Image Recognition by Simonyan and Zisserman. [1] Separating content and style representations in an image is an important task in computer graphics. Aside from texture transfer, the stylization of images is not a well-studied problem. In 2016, the paper Image Style Transfer Using Convolutional Neural Networks by Gatys, Ecker and Bethge proposed a novel algorithm called Neural Algorithm of Artistic Style for the task of style transfer from one image to another. [2] The algorithm they proposed relies on VGG as a building block to recognize objects. They modified the VGG network in three ways. First, they normalized the network so the mean activations is always equal to one. Second, they removed the fully connected layers. Third, they modified the network to do average pooling instead of max pooling. Our objective is to implement the Neural Algorithm of Artistic Style, test its performance on a variety of content and image combinations, observe its robustness to hyperparameter tuning, optimize the algorithm for speed, and propose extensions with interesting applications. Our project is divided into three further sections: the methods we used, the results we obtained, and the conclusions we formed.
+
+\section{Methods}
+
+\section{Results}
+
+\section{Conclusion}
+
+We use the Neural Algorithm of Artistic Style with VGG to build content and style representations. Then we run gradient descent over the output image, optimizing for total loss - a weighted sum of the content and style loss. After being satisfied with the accuracy of the algorithm's implementation, we tested its robustness to various factors like the number of training iterations, the initial random seed, and the relative weights of the content and style loss in the total loss function. Due to the amount of time it takes to run the algorithm we had to implement a version that used GPU operations. This provided us with close to a 10x speedup. We show how effective the algorithm is in producing realistic images over a variety of content and style combinations. Lastly, we proposed a new extension of Neural Algorithm of Artistic Style for many-artist style transfer (MAST) with feeding the output of the network back into itself to blend multiple style images together. The results show a remarkable ability for the second CNN to differentiate between the original style and content images that are blended together and weight them equally as style related factor. In the future, we hope to develop methodology to combine multiple non-overlapping sets of content and style images into k output images.
+
+\section*{References}
+
+[1] Simonyan, Karen \& Zisserman, Andrew. (2014). Very Deep Convolutional Networks for Large-Scale Image Recognition. arXiv 1409.1556.
+
+\noindent [2] L. Gatys, A. Ecker, and M. Bethge, ‘‘Image style transfer using convolutional neural networks,’’ in Proc. IEEE Conf. Comput. Vis. Pattern Recognit. (CVPR), Jun. 2016, pp. 2414–2423.
+
+\end{document}
